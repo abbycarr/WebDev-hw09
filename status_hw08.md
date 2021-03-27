@@ -17,7 +17,7 @@ events-spa.clipturtle.com
 
 
 4. Is your app functionality complete? If not, what's missing?
-yes
+Not all pages are implemented
 
 
 5. Is your app properly deployed? If not, what went wrong?

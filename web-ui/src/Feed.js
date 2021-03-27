@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 
 function Event({ event }) {
+  let link = "/events/" + event.id;
+
   return (
     <Col>
       <Card>
@@ -11,11 +13,14 @@ function Event({ event }) {
           {event.name}
         </Card.Title>
         <Card.Subtitle>
-          {event.date}
+          {event.when}
         </Card.Subtitle>
         <Card.Text>
           <Badge>Hosted by {event.user.name}</Badge>
           <p>{event.description}</p>
+          <Link to={link}>
+            View
+            </Link>
         </Card.Text>
       </Card>
     </Col>

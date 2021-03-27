@@ -12,11 +12,17 @@ defmodule Hw09Web.EventView do
   end
 
   def render("event.json", %{event: event}) do
+    user = if Ecto.assoc_loaded?(event.user) do
+      render_one(event.user, UserView, "user.json")
+    else
+      nil
+    end
+
     %{id: event.id,
       name: event.name,
       when: event.when,
       description: event.description,
-      user: render_one(event.user, UserView, "user.json")
+      user: user,
     }
   end
 end

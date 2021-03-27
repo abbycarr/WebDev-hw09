@@ -5,6 +5,8 @@ import './App.scss';
 import Nav from './Nav';
 import UsersList from './Users/List';
 import UsersNew from './Users/New';
+import InvitesList from './Invites/List';
+import InvitesNew from './Invites/New';
 import EventsNew from './Events/New';
 import Feed from './Feed';
 
@@ -24,6 +26,12 @@ function App() {
         </Route>
         <Route path="/users/new" exact>
           <UsersNew />
+        </Route>
+        <Route path="/invites" exact>
+          <InvitesList />
+        </Route>
+        <Route path="/invites/new" exact>
+          <InvitesNew />
         </Route>
       </Switch>
     </Container>

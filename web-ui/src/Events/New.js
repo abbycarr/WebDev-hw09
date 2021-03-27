@@ -10,8 +10,6 @@ export default function EventsNew() {
 
   function submit(ev) {
     ev.preventDefault();
-    console.log(ev);
-    console.log(event);
     create_event(event).then((resp) => {
       if (resp["errors"]) {
         console.log("errors", resp.errors);
@@ -29,9 +27,9 @@ export default function EventsNew() {
     setEvent(p1);
   }
 
-  function updateDate(ev) {
+  function updateWhen(ev) {
     let p1 = Object.assign({}, event);
-    p1["date"] = ev.target.value;
+    p1["when"] = ev.target.value;
     setEvent(p1);
   }
 
@@ -48,15 +46,17 @@ export default function EventsNew() {
         <Form onSubmit={submit}>
           <Form.Group>
             <Form.Label>Name</Form.Label>
-            <Form.Control as="string"
+            <Form.Control type="text"
               onChange={updateName}
               value={event.name} />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Date</Form.Label>
-            <Form.Control as="date"
-              onChange={updateDate}
-              value={event.date} />
+            <Form.Label>
+              When
+            </Form.Label>
+            <Form.Control type="date"
+              onChange={updateWhen}
+              value={event.when} />
           </Form.Group>
           <Form.Group>
             <Form.Label>Description</Form.Label>

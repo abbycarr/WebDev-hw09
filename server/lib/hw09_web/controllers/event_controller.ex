@@ -4,6 +4,10 @@ defmodule Hw09Web.EventController do
   alias Hw09.Events
   alias Hw09.Events.Event
 
+  alias Hw09Web.Plugs
+  plug Plugs.RequireAuth when action
+    in [:create]
+
   action_fallback Hw09Web.FallbackController
 
   def index(conn, _params) do
@@ -12,6 +16,12 @@ defmodule Hw09Web.EventController do
   end
 
   def create(conn, %{"event" => event_params}) do
+    user = conn.assigns[:current_user]
+    event_params = event_params
+    |> Map.put("user_id", user.id)
+
+    IO.inspect({:event, event_params})
+
     with {:ok, %Event{} = event} <- Events.create_event(event_params) do
       conn
       |> put_status(:created)

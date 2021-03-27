@@ -40,9 +40,18 @@ export function fetch_events() {
   });
 }
 
+export function fetch_invites() {
+  api_get("/invites").then((data) => {
+    let action = {
+      type: 'invites/set',
+      data: data,
+    }
+    store.dispatch(action);
+  });
+}
+
 export function api_login(name, password) {
   api_post("/session", { name, password }).then((data) => {
-    console.log("login resp", data);
     if (data.session) {
       let action = {
         type: 'session/set',
@@ -64,14 +73,14 @@ export function create_user(user) {
   return api_post("/users", { user });
 }
 
-export async function create_event(event) {
+export async function create_event(event) { 
   let state = store.getState();
   let token = state?.session?.token;
 
   let data = new FormData();
-  data.append("event[name]", event.name);
+  data.append("event[when]", event.when);
   data.append("event[description]", event.description);
-  data.append("event[date]", event.date);
+  data.append("event[name]", event.name);
   let opts = {
     method: 'POST',
     body: data,
@@ -84,7 +93,28 @@ export async function create_event(event) {
   return await text.json();
 }
 
+export async function create_invite(invite) {
+  let state = store.getState();
+  let token = state?.session?.token;
+
+  let data = new FormData();
+  data.append("invite[response]", invite.response);
+  data.append("invite[email]", invite.email);
+  data.append("invite[event_id]", invite.event_id);
+  let opts = {
+    method: 'POST',
+    body: data,
+    headers: {
+      'x-auth': token,
+    },
+  };
+  let text = await fetch(
+    "http://localhost:4000/api/v1/invites", opts);
+  return await text.json();
+}
+
 export function load_defaults() {
   fetch_events();
   fetch_users();
+  fetch_invites();
 }

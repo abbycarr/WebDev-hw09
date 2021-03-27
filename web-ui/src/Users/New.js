@@ -9,15 +9,13 @@ import { create_user, fetch_users } from '../api';
 function UsersNew() {
   let history = useHistory();
   const [user, setUser] = useState({
-    name: "", pass1: "", pass2: "",
+    name: "", email: "", pass1: "", pass2: "",
   });
 
   function onSubmit(ev) {
     ev.preventDefault();
-    console.log(ev);
-    console.log(user);
 
-    let data = pick(user, ['name', 'password']);
+    let data = pick(user, ['name', 'email', 'password']);
     create_user(data).then(() => {
       fetch_users();
       history.push("/users");
@@ -25,8 +23,6 @@ function UsersNew() {
   }
 
   function check_pass(p1, p2) {
-    // This is for user experience only,
-    // validation logic goes on the server.
     if (p1 !== p2) {
       return "Passwords don't match.";
     }
@@ -54,6 +50,13 @@ function UsersNew() {
           onChange={
             (ev) => update("name", ev)}
           value={user.name} />
+      </Form.Group>
+      <Form.Group>
+        <Form.Label>Email</Form.Label>
+        <Form.Control type="text"
+          onChange={
+            (ev) => update("email", ev)}
+          value={user.email} />
       </Form.Group>
       <Form.Group>
         <Form.Label>Password</Form.Label>

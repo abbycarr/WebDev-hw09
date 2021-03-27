@@ -27,6 +27,15 @@ function events(state = [], action) {
   }
 }
 
+function invites(state = [], action) {
+  switch (action.type) {
+    case 'invites/set':
+      return action.data;
+    default:
+      return state;
+  }
+}
+
 function save_session(sess) {
   let session = Object.assign({}, sess, { time: Date.now() });
   localStorage.setItem("session", JSON.stringify(session));
@@ -72,14 +81,12 @@ function error(state = null, action) {
 }
 
 function root_reducer(state, action) {
-  console.log("root reducer", state, action);
 
   let redu = combineReducers(
-    { users, user_form, events, session, error }
+    { users, user_form, events, invites, session, error }
   );
 
   let state1 = redu(state, action);
-  console.log("state1", state1);
 
   return state1;
 }
