@@ -3,7 +3,9 @@ import { Switch, Route } from 'react-router-dom';
 
 import './App.scss';
 import Nav from './Nav';
-import Users from './Users';
+import UsersList from './Users/List';
+import UsersNew from './Users/New';
+import EventsNew from './Events/New';
 import Feed from './Feed';
 
 function App() {
@@ -14,8 +16,14 @@ function App() {
         <Route path="/" exact>
           <Feed />
         </Route>
-        <Route path="/users">
-          <Users />
+        <Route path="/events/new" exact>
+          <EventsNew />
+        </Route>
+        <Route path="/users" exact>
+          <UsersList />
+        </Route>
+        <Route path="/users/new" exact>
+          <UsersNew />
         </Route>
       </Switch>
     </Container>

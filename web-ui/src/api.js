@@ -60,6 +60,30 @@ export function api_login(name, password) {
   });
 }
 
+export function create_user(user) {
+  return api_post("/users", { user });
+}
+
+export async function create_event(event) {
+  let state = store.getState();
+  let token = state?.session?.token;
+
+  let data = new FormData();
+  data.append("event[name]", event.name);
+  data.append("event[description]", event.description);
+  data.append("event[date]", event.date);
+  let opts = {
+    method: 'POST',
+    body: data,
+    headers: {
+      'x-auth': token,
+    },
+  };
+  let text = await fetch(
+    "http://localhost:4000/api/v1/events", opts);
+  return await text.json();
+}
+
 export function load_defaults() {
   fetch_events();
   fetch_users();
